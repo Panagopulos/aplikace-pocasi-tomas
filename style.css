@@ -7,6 +7,8 @@
     padding: 0;
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    color: white;
 }
 
 body {
@@ -30,6 +32,13 @@ body::before {
     backdrop-filter: blur(15px);
 }
 
+/* UTILITIES */
+.regular-txt {
+    font-weight: 400;
+}
+/* END UTILITIES */
+
+
 .main-container {
     width: 300px;
     height: 496px;
@@ -46,6 +55,7 @@ body::before {
 
 .input-container{
     position: relative;
+    margin-bottom: 25px;
 }
 
 .city-input {
@@ -79,3 +89,53 @@ body::before {
 }
 
 /* END INPUT CONTAINER */
+
+/* SECTION: WEAThER INFO */
+.weather-info {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.location-date-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.location { 
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.weather-summary-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.weather-summary-img {
+    width: 120px;
+    height: 120px;
+}
+
+.weather-summary-info {
+    text-align: end;
+}
+
+.weather-conditions-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.condition-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.condition-item span {
+    font-size: 30px;
+}
+/* END SECTION: WEATHER INFO */
