@@ -41,18 +41,12 @@ cityInput.addEventListener('keydown', (event) => {
 async function getFetchData(endPoint, city) {
     const apiUrl = `https://api.openweathermap.org/data/2.5/${endPoint}?q=${city}&appid=${apiKey}&units=metric&lang=cz`;
 
-    try{
+    
     const response = await fetch(apiUrl);
-    if(!response.ok) {
-    throw new Error('Network response was not ok');
-    }
-       return response.json();
-       
-    } catch (error) {
-        console.error('Fetch error:', error);
-        return {cod: response.status, message: 'Failed to fetch weather data'}
-     }
+    
+    return response.json();
 }
+       
 //Assining correct icon to different weather situations through id 
 function getWeatherIcon(id) {
     if(id <= 232) return 'thunderstorm.svg';
