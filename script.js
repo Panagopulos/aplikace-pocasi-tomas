@@ -53,7 +53,7 @@ async function getFetchData(endPoint, city) {
         return {cod: response.status, message: 'Failed to fetch weather data'}
      }
 }
-
+//Assining correct icon to different weather situations through id 
 function getWeatherIcon(id) {
     if(id <= 232) return 'thunderstorm.svg';
     if(id <= 321) return 'drizzle.svg';
@@ -63,7 +63,7 @@ function getWeatherIcon(id) {
     if(id === 800) return 'clear.svg';
     else return 'clouds.svg';  
 }
-
+// Getting the current date with Date object, translating the time to czech version
 function getCurrentDate() {
     const currentDate = new Date();
     const options = {
@@ -81,7 +81,7 @@ async function updateWeatherInfo(city) {
         showDisplaySection(notFoundSection);
         return 
     }
-
+    //Destructuring the data from weatherData. Using it to generate DOM
     const {
         name: country,
         main: {temp, humidity},
@@ -94,22 +94,23 @@ async function updateWeatherInfo(city) {
     conditionTxt.textContent = description;
     humidityValueTxt.textContent = humidity;
     windValueTxt.textContent = speed + ' M/s';
-
+    //Generating DOM for date and Weather Icon
     currentDateTxt.textContent = getCurrentDate();
     weatherSummaryImg.src = `assets/weather/${getWeatherIcon(id)}`;
 
-    await updateForecastsInfo(city)
+    await updateForecastsInfo(city)     // awaits promise function for the 5 days forecast
     showDisplaySection(weatherInfoSection);
 
 }
-
+// Fetches the weather forecast data for a given city and updates the DOM to display the relevant forecast items
 async function updateForecastsInfo(city) {
     const forecastsData = await getFetchData('forecast', city);
-
+    // Define the specific time of day (12:00:00) for which the forecast data will be displayed.
     const timeTaken = '12:00:00';
     const todayDate = new Date().toISOString().split('T')[0];
 
     forecastItemsContainer.innerHTML = ''
+     // Loop through the list of forecast data returned from the API.
     forecastsData.list.forEach(forecastWeather => {
         if(forecastWeather.dt_txt.includes(timeTaken)
              && !forecastWeather.dt_txt.includes(todayDate)) {
@@ -117,9 +118,9 @@ async function updateForecastsInfo(city) {
         }
     });
 }
-
+// Updates the DOM with the weather forecast data for a specific date and time.
 function updateForecastsItems(weatherData) {
-    console.log(weatherData);
+    // Destructure the necessary properties from the weatherData object
     const {
         dt_txt: date,
         weather: [{ id }],
@@ -134,6 +135,7 @@ function updateForecastsItems(weatherData) {
 
     const dateResult = dateTaken.toLocaleDateString('cz-CZ',dateOption);
 
+    // Create the HTML structure for the forecast item, inserting the formatted date, weather icon, and temperature.
     const forecastItem = `
          <div class="forecast-item">
            <h5 class="forecast-item-date regular-txt">${dateResult}</h5>
@@ -145,6 +147,7 @@ function updateForecastsItems(weatherData) {
     forecastItemsContainer.insertAdjacentHTML('beforeend', forecastItem)
 }
 
+// Displays the specified section in the DOM while hiding the others.
 function showDisplaySection(section) {
    const sections = [weatherInfoSection, searchCitySection, notFoundSection];
 
